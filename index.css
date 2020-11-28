@@ -49,33 +49,39 @@ body {
   text-align: center;
 }
 
-.gold {
+.memory {
   background-color: #ffd666;
 }
 
-.light-gray {
+.number {
   background-color: #c4c4c4;
 }
 
-.orange {
+.backspace {
   background-color: #ff9c6e;
 }
 
-.yellow {
+.clear {
   background-color: #fff566;
 }
 
-.light-green {
+.operator {
   background-color: #d3f261;
 }
 
-.dark-green {
+.equals {
   background-color: #95de64;
 }
 
 #display-screen {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
   grid-column: 1/6;
   grid-row: 1/3;
+  font-size: 2rem;
+  color: #fff;
   border: 1px solid #f3f3f3;
 }
 
