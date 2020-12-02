@@ -1,8 +1,9 @@
 let operator = "";
-let memory = "";
-let memoryStored = 0;
+let temporaryNumber = 0;
+let enteredNumber = 0;
+let totalValue = 0;
 let entireNumber = [];
-let numbersToCalculate = [];
+let numbersEnteredArray = [];
 
 const displayScreen = document.getElementById("display-screen");
 
@@ -13,83 +14,38 @@ function setupCalculator() {
   for (let i = 0; i < buttons.children.length; i++) {
     let button = buttons.children[i];
     button.addEventListener("click", function (e) {
-      let targetClass = e.target.classList[1];
-      if (targetClass === "number") {
-        getNumber(e.target.id);
+      let targetClass = e.target.classList[0];
+      // console.log(targetClass);
+      if (targetClass === "numberBtn") {
+        getNumber(e.target.value);
       } 
 
-      if (targetClass === "clear" || "backspace") {
+      if ((targetClass === "clearBtn") || (targetClass === "backspaceBtn")) {
+        // console.log(e.target.id);
         clearDisplay(e.target.id);
       }
 
-      if (targetClass === "operator") {
+      if (targetClass === "operatorBtn") {
+        // console.log(e.target.id);
         mathOperator(e.target.id);
       }
 
-      if (targetClass === "equals") {
+      if (targetClass === "equalsBtn") {
+        // console.log(e.target.id)
         calculateAnswer();
       }
     })
   }
 }
 
-function getNumber(targetNumber) {
+function getNumber(targetValue) {
   if (entireNumber.length < 16) {
 
-    if (targetNumber === "number-one") {
-      entireNumber.push(1);
-      displayScreen.textContent = entireNumber.join('');
-    }
-
-    if (targetNumber === "number-two") {
-      entireNumber.push(2);
-      displayScreen.textContent = entireNumber.join('');
-    }
-
-    if (targetNumber === "number-three") {
-      entireNumber.push(3);
-      displayScreen.textContent = entireNumber.join('');
-    }
-
-    if (targetNumber === "number-four") {
-      entireNumber.push(4);
-      displayScreen.textContent = entireNumber.join('');
-    }
-
-    if (targetNumber === "number-five") {
-      entireNumber.push(5);
-      displayScreen.textContent = entireNumber.join('');
-    }
-
-    if (targetNumber === "number-six") {
-      entireNumber.push(6);
-      displayScreen.textContent = entireNumber.join('');
-    }
-  
-    if (targetNumber === "number-seven") {
-      entireNumber.push(7);
-      displayScreen.textContent = entireNumber.join('');
-    }
-  
-    if (targetNumber === "number-eight") {
-      entireNumber.push(8);
-      displayScreen.textContent = entireNumber.join('');
-    }
-  
-    if (targetNumber === "number-nine") {
-      entireNumber.push(9);
-      displayScreen.textContent = entireNumber.join('');
-    }
-  
-    if (targetNumber === "number-zero") {
-      entireNumber.push(0);
-      displayScreen.textContent = entireNumber.join('');
-    }
-  
-    if ((targetNumber === "decimal-point") && (entireNumber.includes(".") === false)) {
-      entireNumber.push(".");
-      displayScreen.textContent = entireNumber.join('');
-    }
+    entireNumber.push(targetValue);
+    displayScreen.textContent = entireNumber.join('');
+    enteredNumber = parseFloat(entireNumber.join(''));
+    // console.log("enteredNumber: ", enteredNumber);
+    // console.log("temporaryNumber: ", temporaryNumber);
   } else {
     displayScreen.textContent = "Max 15 characters"
   }
@@ -103,36 +59,31 @@ function clearDisplay(targetClear) {
 
   if (targetClear === "clear-entry") {
     entireNumber = [];
+    enteredNumber = 0;
     displayScreen.textContent = entireNumber.join('');
   }
 
   if (targetClear === "clear-all") {
-    operator = "";
-    memory = "";
-    memoryStored = 0;
-    entireNumber = [];
-    numbersToCalculate = [];
+  operator = "";
+  temporaryNumber = 0;
+  enteredNumber = 0;
+  totalValue = 0;
+  entireNumber = [];
+  numbersEnteredArray = [];
     displayScreen.textContent = entireNumber.join('');
   }
 }
 
 function mathOperator(targetOperator) {
-  operator = targetOperator;
-  numbersToCalculate.push(entireNumber.join(''));
-  entireNumber = [];
-}
 
-function calculateAnswer() {
-  if (operator = "add") {
-    numbersToCalculate.push(entireNumber.join(''));
-    
-
-
-    operator = "";
-    memory = "";
-    memoryStored = 0;
+  if (targetOperator === 'add') {
+    console.log("totalValue before: ", totalValue);
+    totalValue = totalValue + enteredNumber;
+    console.log("totalValue after: ", totalValue);
+    enteredNumber = 0;
     entireNumber = [];
-    numbersToCalculate = [];
+    displayScreen.textContent = totalValue;
+
   }
 }
 

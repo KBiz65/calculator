@@ -49,27 +49,27 @@ body {
   text-align: center;
 }
 
-.memory {
+.memoryBtn {
   background-color: #ffd666;
 }
 
-.number {
+.numberBtn {
   background-color: #c4c4c4;
 }
 
-.backspace {
+.backspaceBtn {
   background-color: #ff9c6e;
 }
 
-.clear {
+.clearBtn {
   background-color: #fff566;
 }
 
-.operator {
+.operatorBtn {
   background-color: #d3f261;
 }
 
-.equals {
+.equalsBtn {
   background-color: #95de64;
 }
 
