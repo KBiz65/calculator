@@ -130,6 +130,14 @@ function finalAnswer() {
     calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) - (+parseFloat(calculateArray[2]))).toFixed(3));
   }
 
+  if (calculateArray[1] === "multiply") {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) * (+parseFloat(calculateArray[2]))).toFixed(3));
+  }
+
+  if (calculateArray[1] === "divide") {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) / (+parseFloat(calculateArray[2]))).toFixed(3));
+  }
+
   answerDisplay.textContent = +parseFloat(calculateArray[0]);
   temporaryNumber = +parseFloat(calculateArray[0]);
   entireNumber = [];
