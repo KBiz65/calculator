@@ -153,7 +153,6 @@ function modifyMemory(memoryAction) {
   }
 
   if (memoryAction === "memory-retrieve") {
-    memoryDisplay.textContent = "M";
     answerDisplay.textContent = +parseFloat(memoryValue).toFixed(3);
     temporaryNumber = 0;
     calculateArray = [];
