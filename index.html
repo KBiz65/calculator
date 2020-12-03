@@ -13,12 +13,17 @@
   </head>
   <body>
     <div class="main-container" id="main-container">
-      <div id="display-screen">
-        <!-- this is where the results will display -->
+      <div class="display-screen">
+        <div id="memory-display">
+          <!-- this is where the memory icon will display -->
+        </div>
+        <div id="answer-display">
+          <!-- this is where the results will display -->
+        </div>
       </div>
       <button class="memoryBtn" id="memory-add">M+</button>
-      <button class="memoryBtn" id=" memory-subtract">M-</button>
-      <button class="memoryBtn" id=" memory-retrieve">MR</button>
+      <button class="memoryBtn" id="memory-subtract">M-</button>
+      <button class="memoryBtn" id="memory-retrieve">MR</button>
       <button class="memoryBtn" id="memory-clear">MC</button>
       <button class="backspaceBtn" id="backspace">←</button>
       <button class="numberBtn" id="number-seven" value="7">7</button>
@@ -37,7 +42,7 @@
       <button class="operatorBtn" id="subtract">-</button>
       <button class="operatorBtn" id="add">+</button>
       <button class="numberBtn" id="number-zero" value="0">0</button>
-      <button class="numberBtn" id="decimal-point">.</button>
+      <button class="numberBtn" id="decimal-point" value=".">.</button>
       <button class="equalsBtn" id="equals">=</button>
     </div>
     <script src="calculator.js"></script>

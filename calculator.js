@@ -1,38 +1,47 @@
-let operator = "";
 let temporaryNumber = 0;
-let enteredNumber = 0;
-let totalValue = 0;
 let entireNumber = [];
-let numbersEnteredArray = [];
+let calculateArray = [];
+let targetClass = "";
+let memoryValue = 0;
 
-const displayScreen = document.getElementById("display-screen");
+const memoryDisplay = document.getElementById("memory-display");
+const answerDisplay = document.getElementById("answer-display");
 
 function setupCalculator() {
   const buttons = document.getElementById("main-container");
-  displayScreen.textContent = 0;
+  answerDisplay.textContent = 0;
   
   for (let i = 0; i < buttons.children.length; i++) {
     let button = buttons.children[i];
     button.addEventListener("click", function (e) {
-      let targetClass = e.target.classList[0];
-      // console.log(targetClass);
+      targetClass = e.target.classList[0];
+      
       if (targetClass === "numberBtn") {
         getNumber(e.target.value);
       } 
 
       if ((targetClass === "clearBtn") || (targetClass === "backspaceBtn")) {
-        // console.log(e.target.id);
         clearDisplay(e.target.id);
       }
 
       if (targetClass === "operatorBtn") {
-        // console.log(e.target.id);
-        mathOperator(e.target.id);
+        calculateArray.push(temporaryNumber);
+        calculateArray.push(e.target.id);
+        entireNumber = [];
+        temporaryNumber = 0;
+
+        if (calculateArray.length >= 3) {
+          runningTally();
+        }
       }
 
       if (targetClass === "equalsBtn") {
-        // console.log(e.target.id)
-        calculateAnswer();
+        calculateArray.push(temporaryNumber);
+        finalAnswer();
+      }
+
+      if (targetClass === "memoryBtn") {
+        modifyMemory(e.target.id);
       }
     })
   }
@@ -42,49 +51,123 @@ function getNumber(targetValue) {
   if (entireNumber.length < 16) {
 
     entireNumber.push(targetValue);
-    displayScreen.textContent = entireNumber.join('');
-    enteredNumber = parseFloat(entireNumber.join(''));
-    // console.log("enteredNumber: ", enteredNumber);
-    // console.log("temporaryNumber: ", temporaryNumber);
+    temporaryNumber = +parseFloat(entireNumber.join(''));
+    answerDisplay.textContent = temporaryNumber;
   } else {
-    displayScreen.textContent = "Max 15 characters"
+    answerDisplay.textContent = "Max 15 characters"
   }
 }
 
 function clearDisplay(targetClear) {
   if (targetClear === "backspace") {
     entireNumber.pop();
-    displayScreen.textContent = entireNumber.join('');
+    answerDisplay.textContent = entireNumber.join('');
   }
 
   if (targetClear === "clear-entry") {
     entireNumber = [];
-    enteredNumber = 0;
-    displayScreen.textContent = entireNumber.join('');
+    answerDisplay.textContent = entireNumber.join('');
   }
 
   if (targetClear === "clear-all") {
-  operator = "";
-  temporaryNumber = 0;
-  enteredNumber = 0;
-  totalValue = 0;
-  entireNumber = [];
-  numbersEnteredArray = [];
-    displayScreen.textContent = entireNumber.join('');
+    temporaryNumber = 0;
+    entireNumber = [];
+    calculateArray = [];
+    answerDisplay.textContent = entireNumber.join('');
   }
 }
 
-function mathOperator(targetOperator) {
-
-  if (targetOperator === 'add') {
-    console.log("totalValue before: ", totalValue);
-    totalValue = totalValue + enteredNumber;
-    console.log("totalValue after: ", totalValue);
-    enteredNumber = 0;
-    entireNumber = [];
-    displayScreen.textContent = totalValue;
-
+function runningTally() {
+  if ((calculateArray[1] === "add") && ((calculateArray[3] === "add") || (calculateArray[3] === "subtract"))) {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) + (+parseFloat(calculateArray[2]))).toFixed(3));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]);
   }
+
+  if ((calculateArray[1] === "subtract") && ((calculateArray[3] === "add") || (calculateArray[3] === "subtract"))) {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) - (+parseFloat(calculateArray[2]))).toFixed(3));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+  }
+
+  if (calculateArray[1] === "multiply") {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) * (+parseFloat(calculateArray[2]))).toFixed(3));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+  }
+
+  if (calculateArray[1] === "divide") {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) / (+parseFloat(calculateArray[2]))).toFixed(3));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+  }
+
+  if ((calculateArray.length === 6) && (calculateArray[3] === "multiply")) {
+    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) * (+parseFloat(calculateArray[4]))).toFixed(3));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+  }
+
+  if ((calculateArray.length === 6) && (calculateArray[3] === "divide")) {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[2]) / (+parseFloat(calculateArray[4]))).toFixed(3));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+  }
+
+  if ((calculateArray[3] === "multiply") || (calculateArray[3] === "divide")) {
+    answerDisplay.textContent = +parseFloat(calculateArray[2]);
+  }
+}
+
+function finalAnswer() {
+  if (calculateArray[3] === "multiply") {
+    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) * (+parseFloat(calculateArray[4]))).toFixed(3));
+  }
+
+  if (calculateArray[3] === "divide") {
+    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) / (+parseFloat(calculateArray[4]))).toFixed(3));
+  }
+
+  if (calculateArray[1] === "add") {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) + (+parseFloat(calculateArray[2]))).toFixed(3));
+  }
+
+  if (calculateArray[1] === "subtract") {
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) - (+parseFloat(calculateArray[2]))).toFixed(3));
+  }
+
+  answerDisplay.textContent = +parseFloat(calculateArray[0]);
+  temporaryNumber = +parseFloat(calculateArray[0]);
+  entireNumber = [];
+  calculateArray = [];
+}
+
+function modifyMemory(memoryAction) {
+
+  if (memoryAction === "memory-add") {
+    memoryValue += temporaryNumber;
+    memoryDisplay.textContent = "M";
+    temporaryNumber = 0;
+    calculateArray = [];
+  }
+
+  if (memoryAction === "memory-subtract") {
+    memoryValue -= temporaryNumber;
+    memoryDisplay.textContent = "M";
+    temporaryNumber = 0;
+    calculateArray = [];
+  }
+
+  if (memoryAction === "memory-retrieve") {
+    memoryDisplay.textContent = "M";
+    answerDisplay.textContent = +parseFloat(memoryValue).toFixed(3);
+    temporaryNumber = 0;
+    calculateArray = [];
+  }
+
+  if (memoryAction === "memory-clear") {
+    temporaryNumber = 0;
+    entireNumber = [];
+    calculateArray = [];
+    targetClass = "";
+    memoryValue = 0;
+    memoryDisplay.textContent = null;
+  }
+
 }
 
 setupCalculator();
