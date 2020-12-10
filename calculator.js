@@ -3,6 +3,7 @@ let entireNumber = [];
 let calculateArray = [];
 let targetClass = "";
 let memoryValue = 0;
+let lastButtonPressed = "";
 
 const memoryDisplay = document.getElementById("memory-display");
 const answerDisplay = document.getElementById("answer-display");
@@ -17,18 +18,17 @@ function setupCalculator() {
       targetClass = e.target.classList[0];
       
       if (targetClass === "numberBtn") {
+        lastButtonPressed = "number";
         getNumber(e.target.value);
       } 
 
       if ((targetClass === "clearBtn") || (targetClass === "backspaceBtn")) {
+        lastButtonPressed = "clear";
         clearDisplay(e.target.id);
       }
 
       if (targetClass === "operatorBtn") {
-        calculateArray.push(temporaryNumber);
-        calculateArray.push(e.target.id);
-        entireNumber = [];
-        temporaryNumber = 0;
+        addOperator(e.target.id);
 
         if (calculateArray.length >= 3) {
           runningTally();
@@ -41,6 +41,7 @@ function setupCalculator() {
       }
 
       if (targetClass === "memoryBtn") {
+        lastButtonPressed = "memory";
         modifyMemory(e.target.id);
       }
     })
@@ -49,16 +50,35 @@ function setupCalculator() {
 
 function getNumber(targetValue) {
   if (entireNumber.length < 16) {
+    if (targetValue === ".") {
+      entireNumber.push(".");
+      console.log(entireNumber);
+    } else {
+      entireNumber.push(targetValue);
+      temporaryNumber = parseFloat(entireNumber.join(''));
+      answerDisplay.textContent = temporaryNumber.toString();
+    }
 
-    entireNumber.push(targetValue);
-    temporaryNumber = +parseFloat(entireNumber.join(''));
-    answerDisplay.textContent = temporaryNumber;
   } else {
     answerDisplay.textContent = "Max 15 characters"
   }
 }
 
+function addOperator(operator) {
+  if (lastButtonPressed === "operator") {
+    calculateArray[calculateArray.length - 1] = operator;
+  } else {
+    calculateArray.push(temporaryNumber);
+    calculateArray.push(operator);
+    entireNumber = [];
+    temporaryNumber = 0;
+    lastButtonPressed = "operator";
+  }
+}
+
 function clearDisplay(targetClear) {
+  operatorPressed = false;
+  equalsPressedAgain = false;
   if (targetClear === "backspace") {
     entireNumber.pop();
     answerDisplay.textContent = entireNumber.join('');
@@ -138,13 +158,19 @@ function finalAnswer() {
     calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) / (+parseFloat(calculateArray[2]))).toFixed(3));
   }
 
+  if (lastButtonPressed !== "equals") {
+    equalsAgainNumber = temporaryNumber;
+  }
+
   answerDisplay.textContent = +parseFloat(calculateArray[0]);
   temporaryNumber = +parseFloat(calculateArray[0]);
   entireNumber = [];
   calculateArray = [];
+  console.log(lastButtonPressed);
 }
 
 function modifyMemory(memoryAction) {
+  operatorPressed = false;
 
   if (memoryAction === "memory-add") {
     memoryValue += temporaryNumber;
