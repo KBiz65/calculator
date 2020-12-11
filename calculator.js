@@ -52,11 +52,11 @@ function getNumber(targetValue) {
   if (entireNumber.length < 16) {
     if (targetValue === ".") {
       entireNumber.push(".");
-      console.log(entireNumber);
+      answerDisplay.textContent = (entireNumber.join('')).toString();
     } else {
       entireNumber.push(targetValue);
+      answerDisplay.textContent = (entireNumber.join('')).toString();
       temporaryNumber = parseFloat(entireNumber.join(''));
-      answerDisplay.textContent = temporaryNumber.toString();
     }
 
   } else {
@@ -99,71 +99,71 @@ function clearDisplay(targetClear) {
 
 function runningTally() {
   if ((calculateArray[1] === "add") && ((calculateArray[3] === "add") || (calculateArray[3] === "subtract"))) {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) + (+parseFloat(calculateArray[2]))).toFixed(3));
-    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) + (+parseFloat(calculateArray[2]))).toExponential(10));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]).toExponential(10);
   }
 
   if ((calculateArray[1] === "subtract") && ((calculateArray[3] === "add") || (calculateArray[3] === "subtract"))) {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) - (+parseFloat(calculateArray[2]))).toFixed(3));
-    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) - (+parseFloat(calculateArray[2]))).toExponential(10));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]).toExponential(10);
   }
 
   if (calculateArray[1] === "multiply") {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) * (+parseFloat(calculateArray[2]))).toFixed(3));
-    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) * (+parseFloat(calculateArray[2]))).toExponential(10));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]).toExponential(10);
   }
 
   if (calculateArray[1] === "divide") {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) / (+parseFloat(calculateArray[2]))).toFixed(3));
-    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) / (+parseFloat(calculateArray[2]))).toExponential(10));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]).toExponential(10);
   }
 
   if ((calculateArray.length === 6) && (calculateArray[3] === "multiply")) {
-    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) * (+parseFloat(calculateArray[4]))).toFixed(3));
-    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) * (+parseFloat(calculateArray[4]))).toExponential(10));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]).toExponential(10);
   }
 
   if ((calculateArray.length === 6) && (calculateArray[3] === "divide")) {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[2]) / (+parseFloat(calculateArray[4]))).toFixed(3));
-    answerDisplay.textContent = +parseFloat(calculateArray[0]);
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[2]) / (+parseFloat(calculateArray[4]))).toExponential(10));
+    answerDisplay.textContent = +parseFloat(calculateArray[0]).toExponential(10);
   }
 
   if ((calculateArray[3] === "multiply") || (calculateArray[3] === "divide")) {
-    answerDisplay.textContent = +parseFloat(calculateArray[2]);
+    answerDisplay.textContent = +parseFloat(calculateArray[2]).toExponential(10);
   }
 }
 
 function finalAnswer() {
   if (calculateArray[3] === "multiply") {
-    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) * (+parseFloat(calculateArray[4]))).toFixed(3));
+    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) * (+parseFloat(calculateArray[4]))));
   }
 
   if (calculateArray[3] === "divide") {
-    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) / (+parseFloat(calculateArray[4]))).toFixed(3));
+    calculateArray.splice(2, 3, (+parseFloat(calculateArray[2]) / (+parseFloat(calculateArray[4]))).toExponential(10));
   }
 
   if (calculateArray[1] === "add") {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) + (+parseFloat(calculateArray[2]))).toFixed(3));
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) + (+parseFloat(calculateArray[2]))).toExponential(10));
   }
 
   if (calculateArray[1] === "subtract") {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) - (+parseFloat(calculateArray[2]))).toFixed(3));
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) - (+parseFloat(calculateArray[2]))).toExponential(10));
   }
 
   if (calculateArray[1] === "multiply") {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) * (+parseFloat(calculateArray[2]))).toFixed(3));
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) * (+parseFloat(calculateArray[2]))).toExponential(10));
   }
 
   if (calculateArray[1] === "divide") {
-    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) / (+parseFloat(calculateArray[2]))).toFixed(3));
+    calculateArray.splice(0, 3, (+parseFloat(calculateArray[0]) / (+parseFloat(calculateArray[2]))).toExponential(10));
   }
 
   if (lastButtonPressed !== "equals") {
     equalsAgainNumber = temporaryNumber;
   }
 
-  answerDisplay.textContent = +parseFloat(calculateArray[0]);
-  temporaryNumber = +parseFloat(calculateArray[0]);
+  answerDisplay.textContent = +parseFloat(calculateArray[0]).toExponential(10);
+  temporaryNumber = +parseFloat(calculateArray[0]).toExponential(10);
   entireNumber = [];
   calculateArray = [];
   console.log(lastButtonPressed);
