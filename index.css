@@ -65,27 +65,27 @@ body {
   text-align: center;
 }
 
-.memoryBtn {
+.memory-button {
   background-color: #ffd666;
 }
 
-.numberBtn {
+.number-button {
   background-color: #c4c4c4;
 }
 
-.backspaceBtn {
+.backspace-button {
   background-color: #ff9c6e;
 }
 
-.clearBtn {
+.clear-button {
   background-color: #fff566;
 }
 
-.operatorBtn {
+.operator-button {
   background-color: #d3f261;
 }
 
-.equalsBtn {
+.equals-button {
   background-color: #95de64;
 }
 
