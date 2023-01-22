@@ -4,7 +4,7 @@ let calculateArray = [];
 let targetClass = "";
 let memoryValue = 0;
 let lastButtonPressed = "";
-const memoryDisplay = document.getElementById("memory-display");
+const memDisplay = document.getElementById("memory-display");
 const answerDisplay = document.getElementById("answer-display");
 const buttons = document.getElementById("main-container");
 answerDisplay.textContent = 0;
@@ -222,14 +222,14 @@ function modifyMemory(targetMemory) {
 
 function memoryAdd() {
   memoryValue += temporaryNumber;
-  memoryDisplay.textContent = "M";
+  memDisplay.textContent = "M";
   temporaryNumber = 0;
   calculateArray = [];
 }
 
 function memorySubtract() {
   memoryValue -= temporaryNumber;
-  memoryDisplay.textContent = "M";
+  memDisplay.textContent = "M";
   temporaryNumber = 0;
   calculateArray = [];
 }
@@ -246,5 +246,5 @@ function memoryClear() {
   calculateArray = [];
   targetClass = "";
   memoryValue = 0;
-  memoryDisplay.textContent = null;  
+  memDisplay.textContent = null;  
 }
